@@ -1,6 +1,6 @@
 # Static Starter
 
-Project starter to spinning up a static site when you don't need a js framework.
+Project starter to spin up a static site when you don't need a js framework.
 
 The scaffold includes:
 
