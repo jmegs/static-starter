@@ -19,7 +19,7 @@ const imagemin = require("gulp-imagemin")
 const browserSync = require("browser-sync").create()
 
 // what goes where?
-const outputDir = "_dist"
+const outputDir = "dist"
 
 // task clean
 // clean up the build output

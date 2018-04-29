@@ -34,7 +34,7 @@ The scaffold includes:
 ```
 .
 ├── README.md
-├── _dist
+├── dist
 ├── assets
 │   ├── css
 │   ├── fonts
@@ -51,9 +51,9 @@ The scaffold includes:
     └── page-2.pug
 ```
 
-* Built output lives in `_dist`, ready to deploy to wherever you host your static files. I suggest [netlify] or Zeit's [now].
+* Built output lives in `dist`, ready to deploy to wherever you host your static files. I suggest [netlify] or Zeit's [now].
 * Views and any json data files live in `site/` where they will be compiled by the static site generator.
-* CSS, JS, images, and fonts live in `assets/` where they will be processed by gulp and placed lovingly into the root of `_dist`.
+* CSS, JS, images, and fonts live in `assets/` where they will be processed by gulp and placed lovingly into the root of `dist`.
 
 ## Features Coming Soon
 
