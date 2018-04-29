@@ -1,14 +1,14 @@
 # Static Starter
 
-Project starter when spinning up a static site wihout a js framework
+Project starter to spinning up a static site when you don't need a js framework.
 
 The scaffold includes:
 
-* [Eleventy][1] static site generator – a new, template language agnostic generator built with javascript
-* a Gulp-based asset pipeline:
-  * postcss with [cssnext] and [imports]
-  * simple js concatenation
-  * processing images with [imagemin]
+* The [Eleventy][1] static site generator – a new, template language agnostic generator built with javascript
+* A Gulp-based asset pipeline:
+  * Postcss with [cssnext] and [imports]
+  * Simple js concatenation
+  * Images optimization with [imagemin]
 * live reloading and mobile mirroring with [browsersync]
 
 ## Instructions
@@ -54,6 +54,12 @@ The scaffold includes:
 * Built output lives in `_dist`, ready to deploy to wherever you host your static files. I suggest [netlify] or Zeit's [now].
 * Views and any json data files live in `site/` where they will be compiled by the static site generator.
 * CSS, JS, images, and fonts live in `assets/` where they will be processed by gulp and placed lovingly into the root of `_dist`.
+
+## Features Coming Soon
+
+* [ ] Module bundling and transpilation with Webpack.
+* [ ] One-click deploy to Netlify.
+* [ ] Suggested default data source and setup (most likely NetlifyCMS).
 
 [1]: https://github.com/11ty/eleventy#configuration-optional
 [cssnext]: http://cssnext.io/
