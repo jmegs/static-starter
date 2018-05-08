@@ -4,6 +4,9 @@ const del = require("del")
 const plumber = require("gulp-plumber")
 const cp = require("child_process")
 
+// hugo things
+const hugoBin = require("hugo-bin")
+
 // js things
 const concat = require("gulp-concat")
 
@@ -29,14 +32,21 @@ function clean(cb) {
 }
 
 // task generate
-// builds the templates in site/ with eleventy
-function generate() {
-  return cp.spawn("npx", ["eleventy"]).on("close", function(code) {
-    if (code !== 0) {
-      console.error("eleventy failed with code" + code)
-    }
-    browserSync.reload()
-  })
+// builds the files in site/ with hugo
+function generate(cb) {
+  const args = ["-d", "../dist", "-s", "site"]
+  return cp
+    .spawn(hugoBin, args, { stdio: "inherit" })
+    .on("close", function(code) {
+      if (code === 0) {
+        browserSync.reload()
+        cb()
+      } else {
+        console.error("hugo build failed with code: " + code)
+        browserSync.notify("hugo build failed 😞")
+        cb("hugo build failed 😞")
+      }
+    })
 }
 
 // task styles
@@ -57,7 +67,7 @@ function styles() {
 function scripts() {
   return gulp
     .src("assets/js/**/*.js")
-    .pipe(concat("main.js"))
+    .pipe(concat("app.js"))
     .pipe(gulp.dest(`${outputDir}/js`))
     .pipe(browserSync.stream())
 }
@@ -103,7 +113,7 @@ exports.generate = generate
 
 const buildAssets = gulp.parallel(styles, scripts, images, fonts)
 const build = gulp.series(clean, generate, buildAssets)
-const develop = gulp.series(clean, generate, buildAssets, watch)
+const develop = gulp.series(build, watch)
 
 gulp.task("develop", develop)
 gulp.task("build", build)

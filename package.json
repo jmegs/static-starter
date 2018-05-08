@@ -1,24 +1,23 @@
 {
-  "name": "eleventytwo",
+  "name": "static-starter",
   "version": "1.0.0",
-  "description": "A static site starter based on the eleventy generator",
+  "description": "A static site starter with hugo and gulp",
   "author": "jmegs",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "start": "gulp develop",
     "build": "gulp build",
     "new-git-repo": "rm -rf .git && git init"
   },
   "dependencies": {
-    "@11ty/eleventy": "^0.3.3",
-    "browser-sync": "^2.23.7",
+    "browser-sync": "^2.24.4",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-imagemin": "^4.1.0",
     "gulp-plumber": "^1.2.0",
     "gulp-postcss": "^7.0.1",
-    "markdown-it-implicit-figures": "^0.7.1",
+    "hugo-bin": "*",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0"
   }

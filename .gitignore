@@ -1,5 +1,5 @@
 # Dirs
-dist
+dist/
 
 # Dependency directories
 node_modules/
@@ -10,3 +10,6 @@ npm-debug.log*
 
 # dotenv environment variables file
 .env
+
+# mac shit
+.DS_Store
