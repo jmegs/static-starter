@@ -65,7 +65,7 @@ The scaffold includes:
 
 ## Features Coming Soon
 
-* [ ] Module bundling and transpilation with Webpack and Babel. Because javascript.
+* [ x ] Module bundling and transpilation with Webpack and Babel. Because javascript.
 * [ ] One-click deploy to Netlify.
 * [ ] Suggested default data source and setup (most likely NetlifyCMS).
 
