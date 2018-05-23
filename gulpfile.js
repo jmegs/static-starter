@@ -8,7 +8,9 @@ const cp = require("child_process")
 const hugoBin = require("hugo-bin")
 
 // js things
-const concat = require("gulp-concat")
+const webpack = require("webpack")
+const webpackStream = require("webpack-stream")
+const webpackConfig = require("./webpack.config")
 
 // css things
 const postcss = require("gulp-postcss")
@@ -62,14 +64,21 @@ function styles() {
 }
 
 // task scripts
-// simply concatenate js into one file
-// TODO add webpack https://pawelgrzybek.com/using-webpack-with-gulpjs/
-function scripts() {
+// transpiles and bundles javascript
+// use ES6 and all that other fun stuff
+function devScripts() {
   return gulp
-    .src("assets/js/**/*.js")
-    .pipe(concat("app.js"))
+    .src("assets/js/main.js")
+    .pipe(webpackStream(webpackConfig.dev, webpack))
     .pipe(gulp.dest(`${outputDir}/js`))
     .pipe(browserSync.stream())
+}
+
+function prodScripts() {
+  return gulp
+    .src("assets/js/main.js")
+    .pipe(webpackStream(webpackConfig.prod, webpack))
+    .pipe(gulp.dest(`${outputDir}/js`))
 }
 
 // task images
@@ -96,7 +105,7 @@ function fonts() {
 function watch() {
   browserSync.init({ server: `./${outputDir}`, open: false })
   gulp.watch("assets/css/**/*", styles)
-  gulp.watch("assets/js/**/*", scripts)
+  gulp.watch("assets/js/**/*", devScripts)
   gulp.watch("assets/img/**/*", images)
   gulp.watch("assets/fonts/**/*", fonts)
   gulp.watch("site/**/*", generate)
@@ -105,15 +114,21 @@ function watch() {
 // register tasks
 exports.clean = clean
 exports.styles = styles
-exports.scripts = scripts
 exports.fonts = fonts
 exports.images = images
 exports.watch = watch
 exports.generate = generate
 
-const buildAssets = gulp.parallel(styles, scripts, images, fonts)
-const build = gulp.series(clean, generate, buildAssets)
-const develop = gulp.series(build, watch)
+// const buildAssets = gulp.parallel(styles, scripts, images, fonts)
+const build = gulp.series(
+  clean,
+  generate,
+  gulp.parallel(styles, prodScripts, images, fonts)
+)
+const develop = gulp.series(
+  gulp.parallel(styles, devScripts, images, fonts),
+  watch
+)
 
 gulp.task("develop", develop)
 gulp.task("build", build)
