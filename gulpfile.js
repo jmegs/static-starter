@@ -70,7 +70,15 @@ function styles() {
 function scripts() {
   return gulp
     .src('assets/js/main.js')
-    .pipe(webpackStream(webpackConfig.dev, webpack))
+    .pipe(
+      webpackStream(webpackConfig.dev, webpack, (err, stats) => {
+        if (err) {
+          log.error(`webpack failed with ${err}`)
+        } else {
+          log('compiled js')
+        }
+      })
+    )
     .pipe(gulp.dest(`${outputDir}/js`))
     .pipe(browserSync.stream())
 }

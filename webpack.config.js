@@ -1,35 +1,35 @@
 module.exports = {
   dev: {
-    mode: "development",
+    mode: 'development',
     output: {
-      filename: "app.js"
+      filename: 'app.js'
     },
     module: {
       rules: [
         {
           test: /\.(js|jsx)$/,
           // exclude: /(node_modules)/,
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["env"]
+            presets: ['env']
           }
         }
       ]
     }
   },
   prod: {
-    mode: "production",
+    mode: 'production',
     output: {
-      filename: "app.js"
+      filename: 'app.js'
     },
     module: {
       rules: [
         {
           test: /\.(js|jsx)$/,
           // exclude: /(node_modules)/,
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["env"]
+            presets: ['env']
           }
         }
       ]
