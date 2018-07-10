@@ -4,9 +4,6 @@ const del = require('del')
 const plumber = require('gulp-plumber')
 const cp = require('child_process')
 
-// hugo things
-const hugoBin = require('hugo-bin')
-
 // js things
 const webpack = require('webpack')
 const webpackStream = require('webpack-stream')
@@ -14,14 +11,18 @@ const webpackConfig = require('./webpack.config')
 
 // css things
 const postcss = require('gulp-postcss')
-const atImport = require('postcss-import')
-const cssnext = require('postcss-cssnext')
+const standards = require('spike-css-standards')
 
 // image things
 const imagemin = require('gulp-imagemin')
 
 // dev server things
 const browserSync = require('browser-sync').create()
+
+// cli things
+const log = require('@compositor/log')
+log.name = 'site'
+log('hello')
 
 // what goes where?
 const outputDir = 'dist'
@@ -42,9 +43,10 @@ function generate(cb) {
     .on('close', function(code) {
       if (code === 0) {
         browserSync.reload()
+        log('site compiled')
         cb()
       } else {
-        console.error('build failed with code: ' + code)
+        log.error('build failed with code: ' + code)
         browserSync.notify('build failed 😞')
         cb()
       }
@@ -53,12 +55,11 @@ function generate(cb) {
 
 // task styles
 // compiles css with cssnext and imports
-const cssconfig = [atImport({ from: './assets/css/main.css' }), cssnext()]
 function styles() {
   return gulp
     .src('assets/css/*.css')
     .pipe(plumber())
-    .pipe(postcss(cssconfig))
+    .pipe(postcss(standards().plugins))
     .pipe(gulp.dest(`${outputDir}/css`))
     .pipe(browserSync.stream())
 }

@@ -20,10 +20,11 @@
     "gulp-imagemin": "^4.1.0",
     "gulp-plumber": "^1.2.0",
     "gulp-postcss": "^7.0.1",
-    "hugo-bin": "^0.27.1",
-    "postcss-cssnext": "^3.1.0",
-    "postcss-import": "^11.1.0",
+    "spike-css-standards": "latest",
     "webpack": "^4.8.3",
     "webpack-stream": "^4.0.3"
+  },
+  "devDependencies": {
+    "@compositor/log": "^1.0.0-0"
   }
 }
