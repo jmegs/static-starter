@@ -1,30 +1,30 @@
 // gulp things
-const gulp = require("gulp")
-const del = require("del")
-const plumber = require("gulp-plumber")
-const cp = require("child_process")
+const gulp = require('gulp')
+const del = require('del')
+const plumber = require('gulp-plumber')
+const cp = require('child_process')
 
 // hugo things
-const hugoBin = require("hugo-bin")
+const hugoBin = require('hugo-bin')
 
 // js things
-const webpack = require("webpack")
-const webpackStream = require("webpack-stream")
-const webpackConfig = require("./webpack.config")
+const webpack = require('webpack')
+const webpackStream = require('webpack-stream')
+const webpackConfig = require('./webpack.config')
 
 // css things
-const postcss = require("gulp-postcss")
-const atImport = require("postcss-import")
-const cssnext = require("postcss-cssnext")
+const postcss = require('gulp-postcss')
+const atImport = require('postcss-import')
+const cssnext = require('postcss-cssnext')
 
 // image things
-const imagemin = require("gulp-imagemin")
+const imagemin = require('gulp-imagemin')
 
 // dev server things
-const browserSync = require("browser-sync").create()
+const browserSync = require('browser-sync').create()
 
 // what goes where?
-const outputDir = "dist"
+const outputDir = 'dist'
 
 // task clean
 // clean up the build output
@@ -36,27 +36,27 @@ function clean(cb) {
 // task generate
 // builds the files in site/ with hugo
 function generate(cb) {
-  const args = ["-d", "../dist", "-s", "site"]
+  const args = ['build', '-I', '-s', 'site', '-d', 'dist']
   return cp
-    .spawn(hugoBin, args, { stdio: "inherit" })
-    .on("close", function(code) {
+    .spawn('jekyll', args, { stdio: 'inherit' })
+    .on('close', function(code) {
       if (code === 0) {
         browserSync.reload()
         cb()
       } else {
-        console.error("hugo build failed with code: " + code)
-        browserSync.notify("hugo build failed 😞")
-        cb("hugo build failed 😞")
+        console.error('build failed with code: ' + code)
+        browserSync.notify('build failed 😞')
+        cb()
       }
     })
 }
 
 // task styles
 // compiles css with cssnext and imports
-const cssconfig = [atImport({ from: "./assets/css/main.css" }), cssnext()]
+const cssconfig = [atImport({ from: './assets/css/main.css' }), cssnext()]
 function styles() {
   return gulp
-    .src("assets/css/*.css")
+    .src('assets/css/*.css')
     .pipe(plumber())
     .pipe(postcss(cssconfig))
     .pipe(gulp.dest(`${outputDir}/css`))
@@ -66,9 +66,9 @@ function styles() {
 // task scripts
 // transpiles and bundles javascript
 // use ES6 and all that other fun stuff
-function devScripts() {
+function scripts() {
   return gulp
-    .src("assets/js/main.js")
+    .src('assets/js/main.js')
     .pipe(webpackStream(webpackConfig.dev, webpack))
     .pipe(gulp.dest(`${outputDir}/js`))
     .pipe(browserSync.stream())
@@ -76,7 +76,7 @@ function devScripts() {
 
 function prodScripts() {
   return gulp
-    .src("assets/js/main.js")
+    .src('assets/js/main.js')
     .pipe(webpackStream(webpackConfig.prod, webpack))
     .pipe(gulp.dest(`${outputDir}/js`))
 }
@@ -85,7 +85,7 @@ function prodScripts() {
 // copy and minify images
 function images() {
   return gulp
-    .src("assets/img/**/*")
+    .src('assets/img/**/*')
     .pipe(imagemin())
     .pipe(gulp.dest(`${outputDir}/img`))
     .pipe(browserSync.stream())
@@ -95,7 +95,7 @@ function images() {
 // copy fonts from source to build
 function fonts() {
   return gulp
-    .src("assets/fonts/**/*")
+    .src('assets/fonts/**/*')
     .pipe(gulp.dest(`${outputDir}/fonts`))
     .pipe(browserSync.stream())
 }
@@ -104,31 +104,20 @@ function fonts() {
 // watch for changes and run appropriate tasks
 function watch() {
   browserSync.init({ server: `./${outputDir}`, open: false })
-  gulp.watch("assets/css/**/*", styles)
-  gulp.watch("assets/js/**/*", devScripts)
-  gulp.watch("assets/img/**/*", images)
-  gulp.watch("assets/fonts/**/*", fonts)
-  gulp.watch("site/**/*", generate)
+  gulp.watch('assets/css/**/*', styles)
+  gulp.watch('assets/js/**/*', scripts)
+  gulp.watch('assets/img/**/*', images)
+  gulp.watch('assets/fonts/**/*', fonts)
+  gulp.watch('site/**/*', generate)
 }
 
-// register tasks
-exports.clean = clean
-exports.styles = styles
-exports.fonts = fonts
-exports.images = images
-exports.watch = watch
-exports.generate = generate
+const assets = gulp.parallel(styles, scripts, images, fonts)
+const productionAssets = gulp.parallel(styles, prodScripts, images, fonts)
 
-// const buildAssets = gulp.parallel(styles, scripts, images, fonts)
-const build = gulp.series(
-  clean,
-  generate,
-  gulp.parallel(styles, prodScripts, images, fonts)
-)
-const develop = gulp.series(
-  gulp.parallel(styles, devScripts, images, fonts),
-  watch
-)
+const build = gulp.series(clean, generate, assets)
+const buildForProduction = gulp.series(clean, generate, productionAssets)
 
-gulp.task("develop", develop)
-gulp.task("build", build)
+const develop = gulp.series(build, watch)
+
+gulp.task('develop', develop)
+gulp.task('build', buildForProduction)
