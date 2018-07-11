@@ -19,11 +19,6 @@ const imagemin = require('gulp-imagemin')
 // dev server things
 const browserSync = require('browser-sync').create()
 
-// cli things
-const log = require('@compositor/log')
-log.name = 'site'
-log('hello')
-
 // what goes where?
 const outputDir = 'dist'
 
@@ -37,16 +32,15 @@ function clean(cb) {
 // task generate
 // builds the files in site/ with hugo
 function generate(cb) {
-  const args = ['build', '-I', '-s', 'site', '-d', 'dist']
+  const args = ['build', '-Iq', '-s', 'site', '-d', 'dist']
   return cp
     .spawn('jekyll', args, { stdio: 'inherit' })
     .on('close', function(code) {
       if (code === 0) {
         browserSync.reload()
-        log('site compiled')
         cb()
       } else {
-        log.error('build failed with code: ' + code)
+        console.error('build failed with code: ' + code)
         browserSync.notify('build failed 😞')
         cb()
       }
@@ -73,9 +67,7 @@ function scripts() {
     .pipe(
       webpackStream(webpackConfig.dev, webpack, (err, stats) => {
         if (err) {
-          log.error(`webpack failed with ${err}`)
-        } else {
-          log('compiled js')
+          console.error(`webpack failed with ${err}`)
         }
       })
     )
