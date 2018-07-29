@@ -1,4 +1,4 @@
-import { src, dest, watch, parallel, series } from 'gulp'
+import { src, dest, watch as watchSrc, parallel, series } from 'gulp'
 import del from 'del'
 import plumber from 'gulp-plumber'
 import cp from 'child_process'
@@ -55,7 +55,7 @@ export const fonts = () => {
 }
 
 export const generate = done => {
-  return cp.spawn('eleventy', { stdio: inherit }).on('close', code => {
+  return cp.spawn('eleventy').on('close', code => {
     if (code === 0) {
       browserSync.reload()
       done()
@@ -69,11 +69,11 @@ export const generate = done => {
 
 export const watch = () => {
   browserSync.init({ server: DIST })
-  watch(STYLES_GLOB, styles)
-  watch(SCRIPTS_GLOB, scripts)
-  watch(VIEWS_GLOB, generate)
-  watch(IMAGES_GLOB, images)
-  watch(FONTS_GLOB, fonts)
+  watchSrc(STYLES_GLOB, styles)
+  watchSrc(SCRIPTS_GLOB, scripts)
+  watchSrc(VIEWS_GLOB, generate)
+  watchSrc(IMAGES_GLOB, images)
+  watchSrc(FONTS_GLOB, fonts)
 }
 
 const assets = parallel(scripts, styles, fonts, images)
