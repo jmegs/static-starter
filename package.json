@@ -5,7 +5,7 @@
   "author": "jmegs",
   "license": "MIT",
   "scripts": {
-    "start": "gulp develop",
+    "start": "gulp dev",
     "build": "gulp build",
     "new-git-repo": "rm -rf .git && git init"
   },
