@@ -8,15 +8,13 @@ The scaffold includes:
 
 New, but it has a few things going for it including (1) the flexibility to choose from a ton of template languages and (2) it's written in JS, so there's no dependency on Ruby or Go.
 
-#### Postcss with [postcss-preset-env]
+- Compile Sass to CSS
 
-I chose this over a pre-processor like Sass because these will become web standards in the future, we might as well start learning now.
+- TODO: Simple js concatenation
 
-#### TODO: Simple js concatenation
+- TODO: Images optimization with [imagemin]
 
-#### TODO: Images optimization with [imagemin]
-
-#### Live reloading and mobile mirroring with [browsersync]
+- Live reloading and mobile mirroring with [browsersync]
 
 ## Installation
 

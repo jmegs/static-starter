@@ -4,7 +4,8 @@ import plumber from 'gulp-plumber'
 import cp from 'child_process'
 
 import postcss from 'gulp-postcss'
-import standards from 'spike-css-standards'
+import sass from 'gulp-sass'
+import prefix from 'autoprefixer'
 
 import browserSync from 'browser-sync'
 
@@ -14,7 +15,7 @@ const DIST = 'dist'
 
 // source file globs
 const SCRIPTS_GLOB = `${SRC}/scripts/**/*.js`
-const STYLES_GLOB = `${SRC}/styles/main.css`
+const STYLES_GLOB = `${SRC}/styles/main.scss`
 const FONTS_GLOB = `${SRC}/fonts/**/*`
 const IMAGES_GLOB = `${SRC}/img/**/*`
 const VIEWS_GLOB = `${SRC}/views/**/*`
@@ -35,7 +36,8 @@ export const scripts = () => {
 export const styles = () => {
   return src(STYLES_GLOB)
     .pipe(plumber())
-    .pipe(postcss(standards().plugins))
+    .pipe(sass())
+    .pipe(postcss([prefix()]))
     .pipe(dest(`${DIST}/css`))
     .pipe(browserSync.stream())
 }
