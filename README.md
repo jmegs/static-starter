@@ -20,7 +20,7 @@ New, but it has a few things going for it including (1) the flexibility to choos
 
 ### The Easy Way
 
-You can use my other project [tpl] to quickly start a new project with this scaffold
+You can use [tpl] to quickly start a new project with this (or any other) scaffold from Github.
 
 ```sh
 # install tpl
@@ -32,17 +32,21 @@ tpl jmegs/static-starter YOUR_PROJECT
 
 ### The Manual Way
 
-1.  Clone the repo and clean up its git brain (remove my git repo and start a new blank one)
+1.  Clone the repo and clean up its git brain (remove my git repo and start a new blank one).
 
     ```sh
+     # clone the repo without its full history.
      git clone --depth 1 https://github.com/jmegs/static-starter.git YOUR_PROJECT
+     
      cd YOUR_PROJECT
+     
+     # remove existing git information and create a new repository.
      rm -rf .git && git init
     ```
 
 ## Getting Started
 
-1.  Install dependencies. Bask in stillness while it loads. Breathe deeply.
+1.  Install dependencies. Grab a coffee. Breathe deeply. 
 
     ```sh
     yarn
@@ -56,7 +60,7 @@ tpl jmegs/static-starter YOUR_PROJECT
     # or npm start
     ```
 
-3.  When you're done, build the project into dist/ and deploy it somewhere awesome.
+3.  When you're done, build the project and deploy `dist/` somewhere awesome. I like [Netlify] and Zeit's [Now].
 
     ```sh
     yarn build
@@ -85,8 +89,8 @@ tpl jmegs/static-starter YOUR_PROJECT
 └── yarn.lock
 ```
 
-- Built output lives in `dist`, ready to deploy to wherever you host your static files. I suggest [netlify] or Zeit's [now].
-- Views and content live in `src/views` where they will be compiled by the static site generator.
+- Built output lives in `dist`
+- Pages and content live in `src/views` where they will be compiled by the static site generator.
 - CSS, JS, images, and fonts live in their own folders in `src/` where they will be processed by gulp and placed lovingly into `dist`.
 
 [1]: https://www.11ty.io/
