@@ -21,6 +21,8 @@
     "gulp-concat": "^2.6.1",
     "gulp-plumber": "^1.2.0",
     "gulp-postcss": "^8.0.0",
+    "markdown-it": "^8.4.2",
+    "markdown-it-block-image": "^0.0.3",
     "postcss-preset-env": "^6.5.0"
   }
 }

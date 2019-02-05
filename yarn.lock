@@ -3482,6 +3482,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+markdown-it-block-image@^0.0.3:
+  version "0.0.3"
+  resolved "https://npm.squarespace.net:8443/m/markdown-it-block-image/_attachments/markdown-it-block-image-0.0.3.tgz#d3fe650ebf2215ea2c7afb577b394e5f7ffc12ca"
+  integrity sha1-0/5lDr8iFeosevtXezlOX3/8Eso=
+
 markdown-it@^8.4.2:
   version "8.4.2"
   resolved "https://npm.squarespace.net:8443/m/markdown-it/_attachments/markdown-it-8.4.2.tgz#386f98998dc15a37722aa7722084f4020bdd9b54"

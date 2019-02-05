@@ -2,3 +2,16 @@ body {
   padding: 5vmin;
   font-family: system-ui;
 }
+
+img + img {
+  transform: skewX(10deg);
+  transition: transform 300ms ease-out;
+}
+
+img + img:hover {
+  transform: skewX(0deg);
+}
+
+img {
+  display: block;
+}
