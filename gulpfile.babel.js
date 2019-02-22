@@ -3,6 +3,8 @@ import del from 'del'
 import plumber from 'gulp-plumber'
 import cp from 'child_process'
 
+import sass from 'gulp-sass'
+sass.compiler = require('node-sass')
 import postcss from 'gulp-postcss'
 import cssEnv from 'postcss-preset-env'
 
@@ -14,7 +16,7 @@ const DIST = 'dist'
 
 // source file globs
 const SCRIPTS_GLOB = `${SRC}/scripts/**/*.js`
-const STYLES_GLOB = `${SRC}/styles/main.css`
+const STYLES_GLOB = `${SRC}/styles/**/*.scss`
 const FONTS_GLOB = `${SRC}/fonts/**/*`
 const IMAGES_GLOB = `${SRC}/img/**/*`
 const VIEWS_GLOB = `${SRC}/views/**/*`
@@ -35,6 +37,7 @@ export const scripts = () => {
 export const styles = () => {
   return src(STYLES_GLOB)
     .pipe(plumber())
+    .pipe(sass())
     .pipe(postcss([cssEnv({ stage: 0 })]))
     .pipe(dest(`${DIST}/css`))
     .pipe(browserSync.stream())
