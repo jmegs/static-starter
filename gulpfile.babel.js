@@ -10,51 +10,59 @@ import cssEnv from 'postcss-preset-env'
 
 import browserSync from 'browser-sync'
 
-// directories
-const SRC = 'src'
-const DIST = 'dist'
+// where are source files
+const input = {
+  scripts: `assets/scripts/**/*.js`,
+  styles: `assets/styles/**/*.scss`,
+  fonts: `assets/fonts/**/*`,
+  images: `assets/img/**/*`,
+  pages: `src/**/*`
+}
+
+// where is output expected
+const OUTPUT = 'dist'
 
 // source file globs
-const SCRIPTS_GLOB = `${SRC}/scripts/**/*.js`
-const STYLES_GLOB = `${SRC}/styles/**/*.scss`
-const FONTS_GLOB = `${SRC}/fonts/**/*`
-const IMAGES_GLOB = `${SRC}/img/**/*`
-const VIEWS_GLOB = `${SRC}/views/**/*`
+// const SCRIPTS_GLOB = `${SRC}/scripts/**/*.js`
+// const STYLES_GLOB = `${SRC}/styles/**/*.scss`
+// const FONTS_GLOB = `${SRC}/fonts/**/*`
+// const IMAGES_GLOB = `${SRC}/img/**/*`
+// const VIEWS_GLOB = `${SRC}/views/**/*`
 
 // clean the output directory
 export const clean = () => {
-  return del([DIST])
+  return del([OUTPUT])
 }
 
 // @TODO decide on script strategy
 export const scripts = () => {
-  return src(SCRIPTS_GLOB)
-    .pipe(dest(`${DIST}/js`))
+  return src(input.scripts)
+    .pipe(dest(`${OUTPUT}/js`))
     .pipe(browserSync.stream())
 }
 
 // compile styles
 export const styles = () => {
-  return src(STYLES_GLOB)
+  return src(input.styles)
     .pipe(plumber())
     .pipe(sass())
     .pipe(postcss([cssEnv({ stage: 0 })]))
-    .pipe(dest(`${DIST}/css`))
+    .pipe(dest(`${OUTPUT}/css`))
     .pipe(browserSync.stream())
 }
 
 export const images = () => {
   return (
-    src(IMAGES_GLOB)
+    src(input.images)
       // @TODO Minify
       .pipe(plumber())
-      .pipe(dest(`${DIST}/img`))
+      .pipe(dest(`${OUTPUT}/img`))
       .pipe(browserSync.stream())
   )
 }
 
 export const fonts = () => {
-  return src(FONTS_GLOB).pipe(dest(`${DIST}/fonts`))
+  return src(input.fonts).pipe(dest(`${OUTPUT}/fonts`))
 }
 
 export const generate = done => {
@@ -71,12 +79,12 @@ export const generate = done => {
 }
 
 export const watch = () => {
-  browserSync.init({ server: DIST })
-  watchSrc(STYLES_GLOB, styles)
-  watchSrc(SCRIPTS_GLOB, scripts)
-  watchSrc(VIEWS_GLOB, generate)
-  watchSrc(IMAGES_GLOB, images)
-  watchSrc(FONTS_GLOB, fonts)
+  browserSync.init({ server: OUTPUT })
+  watchSrc(input.scripts, scripts)
+  watchSrc(input.styles, styles)
+  watchSrc(input.images, images)
+  watchSrc(input.fonts, fonts)
+  watchSrc(input.pages, generate)
 }
 
 const assets = parallel(scripts, styles, fonts, images)

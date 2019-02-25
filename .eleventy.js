@@ -9,7 +9,7 @@ module.exports = function(eleventyConfig) {
   // return the config object
   return {
     dir: {
-      input: 'src/views',
+      input: 'src',
       output: 'dist'
     }
   }
