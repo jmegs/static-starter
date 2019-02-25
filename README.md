@@ -8,9 +8,9 @@ The scaffold includes:
 
 New, but it has a few things going for it including (1) the flexibility to choose from a ton of template languages and (2) it's written in JS, so there's no dependency on Ruby or Go.
 
-- Compile Sass to CSS
+- Compile Sass to CSS and process with [postcss]
 
-- TODO: Simple js concatenation
+- TODO: Decide on a scripts strategy. Do we use webpack, or simply concat files together?
 
 - TODO: Images optimization with [imagemin]
 
@@ -25,6 +25,8 @@ You can use [tpl] to quickly start a new project with this (or any other) scaffo
 ```sh
 # install tpl
 npm install -g @jmegs/tpl
+# or
+yarn global add @jmegs/tpl
 
 # start your project
 tpl jmegs/static-starter YOUR_PROJECT
@@ -37,16 +39,16 @@ tpl jmegs/static-starter YOUR_PROJECT
     ```sh
      # clone the repo without its full history.
      git clone --depth 1 https://github.com/jmegs/static-starter.git YOUR_PROJECT
-     
+
      cd YOUR_PROJECT
-     
+
      # remove existing git information and create a new repository.
      rm -rf .git && git init
     ```
 
 ## Getting Started
 
-1.  Install dependencies. Grab a coffee. Breathe deeply. 
+1.  Install dependencies. Grab a coffee. Breathe deeply.
 
     ```sh
     yarn
@@ -69,33 +71,14 @@ tpl jmegs/static-starter YOUR_PROJECT
 
 ## Structure
 
-```
-.
-├── README.md
-├── gulpfile.babel.js
-├── netlify.toml
-├── package.json
-├── src
-│   ├── fonts
-│   ├── img
-│   ├── scripts
-│   │   └── main.js
-│   ├── styles
-│   │   └── main.css
-│   └── views
-│       ├── _includes
-│       │   └── base.html
-│       └── index.html
-└── yarn.lock
-```
-
+- Pages and content live in `src` where they will be compiled by the static site generator.
+- Any data files placed in `src/_data` will be available to all pages inside `src`
+- CSS, JS, images, and fonts live in their own folders in `assets/` where they will be processed by gulp and placed lovingly into `dist`.
 - Built output lives in `dist`
-- Pages and content live in `src/views` where they will be compiled by the static site generator.
-- CSS, JS, images, and fonts live in their own folders in `src/` where they will be processed by gulp and placed lovingly into `dist`.
 
 [1]: https://www.11ty.io/
 [tpl]: https://github.com/jmegs/tpl
-[postcss-preset-env]: https://github.com/csstools/postcss-preset-env
+[postcss]: https://github.com/csstools/postcss-preset-env
 [imagemin]: https://github.com/sindresorhus/gulp-imagemin
 [browsersync]: https://browsersync.io/docs
 [netlify]: https://www.netlify.com/
