@@ -26,5 +26,10 @@
     "markdown-it-block-image": "^0.0.3",
     "node-sass": "^4.11.0",
     "postcss-preset-env": "^6.5.0"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   }
 }
