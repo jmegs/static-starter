@@ -1,85 +1,97 @@
 # Static Starter
 
-Project starter to spin up a static site when you don't need a js framework.
+This is a simple boilerplate for static sites. It tries to replicate the directory structure of generators like middleman and jekyll and layer on more recent modern perks like postcss processing, global data, and support for multiple template languages at the same time.
 
-The scaffold includes:
+# Start a new site
 
-#### The [Eleventy][1] static site generator
+## The Easy Way
 
-New, but it has a few things going for it including (1) the flexibility to choose from a ton of template languages and (2) it's written in JS, so there's no dependency on Ruby or Go.
-
-- Compile Sass to CSS and process with [postcss]
-
-- TODO: Decide on a scripts strategy. Do we use webpack, or simply concat files together?
-
-- TODO: Images optimization with [imagemin]
-
-- Live reloading and mobile mirroring with [browsersync]
-
-## Installation
-
-### The Easy Way
-
-You can use [tpl] to quickly start a new project with this (or any other) scaffold from Github.
+The easiest way to get started is to copy this repo using `degit`. If the second argument is omitted, the project will be setup in your current directory.
 
 ```sh
-# install tpl
-npm install -g @jmegs/tpl
-# or
-yarn global add @jmegs/tpl
-
-# start your project
-tpl jmegs/static-starter YOUR_PROJECT
+npx degit jmegs/static-starter YOUR_PROJECT
 ```
 
-### The Manual Way
+## The Manual Way
 
-1.  Clone the repo and clean up its git brain (remove my git repo and start a new blank one).
+You an also clone this project and re-initialize git
 
-    ```sh
-     # clone the repo without its full history.
-     git clone --depth 1 https://github.com/jmegs/static-starter.git YOUR_PROJECT
+```sh
+git clone --depth 1 git@github.com:jmegs/static-starter YOUR_PROJECT
+cd YOUR_PROJECT
+rm -rf .git
+git init
+```
 
-     cd YOUR_PROJECT
+## Install Dependencies
 
-     # remove existing git information and create a new repository.
-     rm -rf .git && git init
-    ```
+Once the files are cloned over, install dependencies with `yarn` or `npm i`
 
-## Getting Started
+# Directory Structure
 
-1.  Install dependencies. Grab a coffee. Breathe deeply.
+The static starter default comes with a structure that looks like this.
 
-    ```sh
-    yarn
-    # or npm install
-    ```
+```
+.
+├── README.md
+├── gulpfile.js
+├── package.json
+├── source
+│   ├── assets
+│   │   ├── css
+│   │   │   └── style.css
+│   │   ├── fonts
+│   │   ├── img
+│   │   └── js
+│   │       └── app.js
+│   ├── data
+│   │   └── example.json
+│   ├── includes
+│   │   └── example.html
+│   ├── index.html
+│   └── layouts
+│       └── base.html
+└── yarn.lock
+```
 
-2.  Start the development server. All changes will be processed and your site will automatically reload on http://localhost:3000
+## Main Directories
 
-    ```sh
-    yarn start
-    # or npm start
-    ```
+### `source`
 
-3.  When you're done, build the project and deploy `dist/` somewhere awesome. I like [Netlify] and Zeit's [Now].
+This contains all your main website files to be built: templates, pages, includes, assets, and data
 
-    ```sh
-    yarn build
-    # or npm run build
-    ```
+### `source/assets`
 
-## Structure
+the `js`, `css`, `fonts`, and `images` directories in assets are processed by gulp and placed in `assets` in the built output
 
-- Pages and content live in `src` where they will be compiled by the static site generator.
-- Any data files placed in `src/_data` will be available to all pages inside `src`
-- CSS, JS, images, and fonts live in their own folders in `assets/` where they will be processed by gulp and placed lovingly into `dist`.
-- Built output lives in `dist`
+### `source/data`
 
-[1]: https://www.11ty.io/
-[tpl]: https://github.com/jmegs/tpl
-[postcss]: https://github.com/csstools/postcss-preset-env
-[imagemin]: https://github.com/sindresorhus/gulp-imagemin
-[browsersync]: https://browsersync.io/docs
-[netlify]: https://www.netlify.com/
-[now]: https://zeit.co/now
+any `json` file in this directory will be available in all your pages and templates as an object with the same name as its filename. so `example.json` with a key-value pair `"foo": "bar"` can be used anywhere on your site as `<p>the value of foo is: {{example.foo}}</p>`.
+
+### `dist`
+
+the site will be built into `dist`, you can host this directory as a static site anywhere
+
+## Development
+
+To start the development server, run `yarn start` or `npm start`. This will watch the `source` directory, recompiling the site and processing assets as things change.
+
+### Building Pages
+
+any file not insite of `assets`, `data`, `layouts`, or `includes` will be processed by `eleventy` as templates. You can use a wide variety of template languages and it will understand them all. See the [eleventy template docs](https://www.11ty.io/docs/languages/) for the full list.
+
+### Using Layouts and Partials
+
+Files in `source/layouts` can be used to wrap pages in a layout. This works the same way as jekyll or other static site generators. See the [eleventy layout docs](https://www.11ty.io/docs/layouts/) for details.
+
+Files in `source/includes` can be included as partials on any page. See the [eleventy template docs](https://www.11ty.io/docs/languages/) for how to do this per language.
+
+### Building Assets
+
+css files in `assets/css` are processed by `postcss`. You can use anything from [this list](https://preset-env.cssdb.org/features) in your css files.
+
+javascript, images, and fonts are copied over as-is. in the future there will be an option to process javascript with webpack and images with imagemin.
+
+## Deployment
+
+Running `yarn build` or `npm run build` will build the site into `dist` which can be served from any static site host.
