@@ -1,18 +1,24 @@
-# Dirs
+# Built output
 dist/
 
 # Dependency directories
 node_modules/
 
+# Temporary files
+.cache
+.npm
+.yarn-integrity
+
 # Logs
+logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-# dotenv environment variables file
+# Environment variables shhh
 .env
 
-# mac shit
+# Mac shit
 .DS_Store
-
-# generated files
-.jekyll-metadata
