@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site Title</title>
+  <title>{%- if title %}{{title}} | {% endif %}{{site.title}}</title>
   <meta name="description" content="">
   <link rel="stylesheet" href="/assets/main.css">
   <script src="/assets/app.js" defer></script>
 </head>
 <body>
-  {{ content }}
+  {{ content | safe }}
 </body>
 </html>
