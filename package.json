@@ -10,32 +10,35 @@
     "url": "https://github.com/jmegs/static-starter"
   },
   "devDependencies": {
-    "@11ty/eleventy": "latest",
+    "@11ty/eleventy": "^0.11.0",
     "@fec/eleventy-plugin-remark": "^1.0.2",
+    "css-loader": "^3.5.3",
     "luxon": "^1.23.0",
+    "mini-css-extract-plugin": "^0.9.0",
     "npm-run-all": "^4.1.5",
-    "postcss-cli": "^7.1.0",
-    "postcss-easy-import": "^3.0.0",
+    "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
+    "remark": "^12.0.0",
     "remark-html": "^11.0.1",
     "remark-unwrap-images": "^2.0.0",
-    "remark": "^12.0.0",
     "require-dir": "^1.2.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack": "^4.43.0"
+    "webpackbar": "^4.0.0"
   },
   "scripts": {
     "start": "npm run watch",
     "clean": "rm -rf _site/*",
     "build": "ELEVENTY_ENV=production run-s clean build:*",
     "build:site": "eleventy --config=eleventy.config.js",
-    "build:js": "webpack -p src/assets/app.js -o _site/assets/app.js",
-    "build:css": "postcss src/assets/main.css -d _site/assets --verbose",
+    "build:assets": "webpack -p",
     "postbuild": "prettier --write '_site/**/*.{html,css}'",
     "watch": "ELEVENTY_ENV=development run-s clean && run-p watch:*",
     "watch:site": "eleventy --serve --port=3000 --config=eleventy.config.js --quiet",
-    "watch:js": "webpack -d src/assets/app.js -o _site/assets/app.js --watch --display=minimal",
-    "watch:css": "postcss src/assets/main.css -d _site/assets --watch"
+    "watch:assets": "webpack -d --watch"
   },
   "author": "John Meguerian <johnmeguerian@gmail.com>",
   "license": "ISC"

@@ -24,7 +24,7 @@ module.exports = function(config) {
 
   // have the 11ty browsersync instance watch the built assets folder
   config.setBrowserSyncConfig({
-    files: ["_site/assets/*"],
+    files: "src/assets/*",
     host: require("os").hostname()
   })
 
