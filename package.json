@@ -2,9 +2,6 @@
   "name": "static-starter",
   "version": "0.1.0",
   "description": "",
-  "dependencies": {
-    "vh-check": "^2.0.5"
-  },
   "private": true,
   "repository": {
     "url": "https://github.com/jmegs/static-starter"
