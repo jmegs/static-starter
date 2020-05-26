@@ -1,5 +1,5 @@
 # Built output
-_site/
+dist/
 
 # Dependency directories
 node_modules/
