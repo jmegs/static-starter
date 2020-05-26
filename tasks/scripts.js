@@ -45,7 +45,8 @@ module.exports = function scripts() {
         entry: entryPaths,
         output: { filename: "[name].js" },
         module: { rules: [babelConfig] },
-        plugins: [envPlugin]
+        plugins: [envPlugin],
+        stats: "errors-warnings"
       })
     )
     .pipe(gulp.dest(config.assetDest + "/js"))
