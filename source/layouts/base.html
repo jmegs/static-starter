@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if title %}{{title}} | {% endif %}{{site.title}}</title>
   <meta name="description" content="">
-  <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="/assets/js/app.js" defer></script>
+  <link rel="stylesheet" href="{{manifest["main.css"]}}">
+  <script src="{{manifest["main.js"]}}" defer></script>
 </head>
 <body>
   {{ content }}
