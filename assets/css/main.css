@@ -1,0 +1,11 @@
+body {
+	background-color: lavenderblush;
+	color: #313131;
+	font-family: system-ui;
+	padding: 18vh 1rem;
+	text-align: center;
+}
+
+#emoji {
+	width: 20rem;
+}
