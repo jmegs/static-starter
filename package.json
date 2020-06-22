@@ -7,14 +7,12 @@
     "not op_mini all"
   ],
   "scripts": {
-    "clean": "rimraf dist",
-    "watch:site": "eleventy --config=config/eleventy.config.js --serve",
-    "watch:css": "postcss assets/css/main.css --config=config/posstcss.config.js -d dist/assets/css --watch",
-    "watch:js": "parcel watch assets/js/main.js -d dist/assets/js",
-    "build:site": "eleventy --config=config/eleventy.config.js",
-    "build:css": "postcss assets/css/main.css --config=config/posstcss.config.js -d dist/assets/css",
-    "build:js": "parcel build assets/js/main.js -d dist/assets/js",
-    "build": "NODE_ENV=production npm-run-all -l --aggregate-output clean build:*",
+    "clean": "rm -rf dist",
+    "watch:site": "eleventy --config=eleventy.config.js --serve",
+    "watch:assets": "parcel watch assets/js/main.js assets/css/main.scss -d dist/assets --no-hmr",
+    "build:site": "eleventy --config=eleventy.config.js",
+    "build:assets": "parcel build assets/js/main.js assets/css/main.scss -d dist/assets",
+    "build": "NODE_ENV=production npm-run-all -l clean build:*",
     "dev": "NODE_ENV=development npm-run-all -l -c clean -p watch:*",
     "start": "yarn run dev"
   },
@@ -26,6 +24,7 @@
     "postcss-cli": "^7.1.1",
     "postcss-easy-import": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "sass": "^1.26.8"
   }
 }
