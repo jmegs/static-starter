@@ -14,7 +14,7 @@ module.exports = function (config) {
 	return {
 		dir: {
 			output: "dist",
-			input: "views",
+			input: "source/views",
 			includes: "partials",
 			layouts: "layouts",
 			data: "../data"
