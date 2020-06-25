@@ -9,9 +9,9 @@
   "scripts": {
     "clean": "rm -rf dist",
     "watch:site": "eleventy --config=eleventy.config.js --serve",
-    "watch:assets": "parcel watch assets/js/main.js assets/css/main.scss -d dist/assets --no-hmr",
+    "watch:assets": "parcel watch source/assets/js/main.js source/assets/css/main.scss -d dist/assets --no-hmr",
     "build:site": "eleventy --config=eleventy.config.js",
-    "build:assets": "parcel build assets/js/main.js assets/css/main.scss -d dist/assets",
+    "build:assets": "parcel build source/assets/js/main.js source/assets/css/main.scss -d dist/assets",
     "build": "NODE_ENV=production npm-run-all -l clean build:*",
     "dev": "NODE_ENV=development npm-run-all -l -c clean -p watch:*",
     "start": "yarn run dev"
@@ -21,10 +21,8 @@
     "js-yaml": "^3.14.0",
     "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.12.4",
-    "postcss-cli": "^7.1.1",
     "postcss-easy-import": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
-    "rimraf": "^3.0.2",
     "sass": "^1.26.9"
   }
 }
